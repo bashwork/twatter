@@ -1,0 +1,66 @@
+<project xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- project variables -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <property name="author"     value="Galen Collins"/>
+  <property name="version"    value="1.0"/>
+  <property name="main.class" value="org.twatter.main.TwatterMain"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- build variables -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <property name="src.dir"    location="${basedir}/src"/>
+  <property name="build.dir"  location="${basedir}/build"/>
+  <property name="jar.dir"    location="${basedir}/jar"/>
+  <property name="lib.dir"    location="${basedir}/lib"/>
+  <property name="docs.dir"   location="${build.dir}/docs"/>
+  <property name="dist.dir"   location="${build.dir}/dist"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- ivy configuration -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <property name="ivy.dep.file" value="${basedir}/ivy/ivy.xml"/>
+  <property name="ivy.settings.file" value="${basedir}/ivy/ivysettings.xml"/>
+
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- define the global classpath -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <path id="classpath">
+    <fileset dir="${lib.dir}" includes="**/*.jar"/>
+  </path>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- define filename-friendly names for the OS variants -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <condition property="os.libsname" value="osx">
+    <os name="Mac OS X" />
+  </condition>
+  <condition property="os.jni.ext" value="jnilib">
+    <os name="Mac OS X" />
+  </condition>
+  <condition property="os.libsname" value="linux">
+    <os name="Linux" />
+  </condition>
+  <condition property="os.jni.ext" value="so">
+    <os name="Linux" />
+  </condition>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- import our various commands -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+  <import file="init.xml" />
+  <import file="clean.xml" />
+  <import file="compile.xml" />
+  <import file="test.xml" />
+  <import file="docs.xml" />
+  <import file="package.xml" />
+  <import file="run.xml" />
+  <import file="dist.xml" />
+  <import file="install.xml" />
+
+</project>
+
+

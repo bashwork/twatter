@@ -1,0 +1,30 @@
+<project xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- retrieves all the dependencies using ivy -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="resolve" depends="init.ivy" description="retrieve all the project dependencies">
+    <mkdir dir="${lib.dir}" />
+    <ivy:retrieve />
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- compiles all the samples -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="compile" depends="init" description="compiles all the samples" >
+    <mkdir dir="${build.dir}" />
+    <condition property="compile.args" value="-Xplugin:${lib.dir}/scct_2.8.0-0.1-SNAPSHOT.jar">
+      <isset property="compile.coverage" />
+    </condition>
+    <scalac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath"
+        deprecation="yes" unchecked="yes" addparams="${compile.args}">
+      <include name="**/*.scala" />
+    </scalac>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- aliases -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="build" depends="compile" description="compiles all the samples" />
+
+</project>

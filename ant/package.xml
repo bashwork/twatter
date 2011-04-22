@@ -1,0 +1,59 @@
+<project xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- build a jar of the code -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="package" depends="compile" description="generate the distribution" >
+    <mkdir dir="${jar.dir}/"/>
+    <jar jarfile="${jar.dir}/${ant.project.name}.jar" basedir="${build.dir}">
+
+      <zipfileset src="${lib.dir}/commons-cli-1.2.jar" />
+      <zipfileset src="${lib.dir}/commons-pool-1.5.5.jar" />
+      <zipfileset src="${lib.dir}/scala-compiler-2.8.1.jar" />
+      <zipfileset src="${lib.dir}/scala-library-2.8.1.jar" />
+      <zipfileset src="${lib.dir}/slf4j-api-1.6.1.jar" />
+      <zipfileset src="${lib.dir}/slf4j-simple-1.6.1.jar" />
+      <zipfileset src="${lib.dir}/twitter4j-core-2.2.1.jar" />
+      <zipfileset src="${lib.dir}/twitter4j-stream-2.2.1.jar" />
+      <zipfileset src="${lib.dir}/twitter4j-async-2.2.1.jar" />
+      <zipfileset src="${lib.dir}/jedis-1.5.2.jar" />
+
+      <manifest>
+        <attribute name="Main-Class" value="${main.class}" />
+        <attribute name="Built-By" value="${author}" />
+        <section name="org.wdm">
+          <attribute name="Specification-Vendor" value="${author}" />
+          <attribute name="Specification-Title" value="${ant.project.name}" />
+          <attribute name="Specification-Version" value="${version}" />
+          <attribute name="Implementation-Vendor" value="${author}" />
+          <attribute name="Implementation-Title" value="${ant.project.name}" />
+          <attribute name="Implementation-Version" value="${version}" />
+        </section>
+      </manifest>
+    </jar>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- build a source jar of the code -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="package.src" depends="compile" description="generate the distribution" >
+    <mkdir dir="${jar.dir}/"/>
+    <jar jarfile="${jar.dir}/${ant.project.name}-src.jar" basedir="${src.dir}">
+      <manifest>
+        <attribute name="Main-Class" value="${main.class}" />
+        <attribute name="Built-By" value="${author}" />
+        <section name="org.wdm">
+          <attribute name="Specification-Vendor" value="${author}" />
+          <attribute name="Specification-Title" value="${ant.project.name}" />
+          <attribute name="Specification-Version" value="${version}" />
+          <attribute name="Implementation-Vendor" value="${author}" />
+          <attribute name="Implementation-Title" value="${ant.project.name}" />
+          <attribute name="Implementation-Version" value="${version}" />
+        </section>
+      </manifest>
+    </jar>
+  </target>
+
+</project>
+
+
