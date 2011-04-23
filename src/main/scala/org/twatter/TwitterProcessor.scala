@@ -78,11 +78,16 @@ class TwitterProcessor(filename:String, database:JedisPool,
 
         try {
             val id = status.getId.toString
+            // todo status.getURLEntities.foreach { entity =>
+            //    val lines = scala.io.Source.fromURL(entity.getURL).getLines
+            //}
+            // todo status.isFavorited multiplier ?
             status.getHashtagEntities.foreach { tag =>
                 val text = tag.getText.toLowerCase
                 redis.sadd(TwitterRedis.topicsKey,  text)
                 redis.sadd(TwitterRedis.topicKey(text), id)
-                redis.incr(TwitterRedis.topicCountKey(text))
+                redis.incrBy(TwitterRedis.topicCountKey(text),
+                    math.max(status.getRetweetCount, 1L))
                 redis.incr(TwitterRedis.postsCountKey)
             }
         } finally {

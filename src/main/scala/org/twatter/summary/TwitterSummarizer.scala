@@ -51,7 +51,7 @@ class TwitterSummarizer(inputPath:String, outputPath:String, percent:Double) {
      */
     private def extractLines(input:File) : List[String] = {
         scala.io.Source.fromFile(input.getAbsolutePath)
-            .mkString.split('.').toList
+            .mkString.split('\n').toList
     }
 
     /**
