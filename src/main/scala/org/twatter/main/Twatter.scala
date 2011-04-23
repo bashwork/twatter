@@ -11,8 +11,10 @@ import org.twatter.{TwitterReceiver, TwitterProcessor}
  *
  * - h | help    : prints this help text
  * - v | version : prints the version of the server
- * - i | input   : specify the input data to parse
- * - o | output  : specify the output file of results
+ * - r | redis   : specify the redis uri to use
+ * - o | output  : specify the output directory for files
+ * - p | poison  : specify a poison word list
+ * - t | threads : specify the number of processing threads
  */
 object Twatter {
 
@@ -67,13 +69,14 @@ object Twatter {
         implicit def _atoi(a:Any) = a.toString.toInt
 
         if (!processDirectory(options("output"))) error
-        val poison = processPoison(options("poison"))
-        val redis  = processRedis(options("redis"))
+        val poison  = processPoison(options("poison"))
+        val redis   = processRedis(options("redis"))
+        val threads = math.max(options("threads"), 1)
+        val process = (1 to threads).map { _ =>
+            TwitterProcessor(options("output"), redis, poison)
+        }.toList
 
-
-        val process = new TwitterProcessor(options("output"), redis, poison)
         val receive = new TwitterReceiver(process)
-        process.start
         receive.start
     }
 
@@ -90,9 +93,10 @@ object Twatter {
 
         results.getOptions.foreach { o:Option =>
           o.getOpt match {
-              case "i" | "output"   => defaults += ("output" -> o.getValue())
-              case "r" | "redis"    => defaults += ("redis"  -> o.getValue())
-              case "p" | "poison"   => defaults += ("poison" -> o.getValue())
+              case "i" | "output"   => defaults += ("output"  -> o.getValue())
+              case "r" | "redis"    => defaults += ("redis"   -> o.getValue())
+              case "p" | "poison"   => defaults += ("poison"  -> o.getValue())
+              case "t" | "threads"  => defaults += ("threads" -> o.getValue())
               case "v" | "version"  => printVersion
               case "h" | "help" | _ => printHelp(options)
           }
@@ -113,6 +117,7 @@ object Twatter {
         options.addOption("r", "redis", true, "specify the redis uri to use")
         options.addOption("o", "output", true, "specify the output directory for files")
         options.addOption("p", "poison", true, "specify a poison word list")
+        options.addOption("t", "threads", true, "specify the number of processing threads")
     }
 
     /**
@@ -121,6 +126,7 @@ object Twatter {
      * @return The default options map
      */
     private def createDefaults() = Map[String,Any](
+        "threads" -> "2",
         "redis"   -> "127.0.0.1:6379",
         "poison"  -> "",
         "output"  -> "twatter")

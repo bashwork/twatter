@@ -10,10 +10,11 @@ import org.slf4j.{Logger, LoggerFactory}
  *
  * @param processor The actor used to process new messages
  */
-class TwitterReceiver(processor:Actor) {
+class TwitterReceiver(processors:List[Actor]) {
 
-    private val stream = new TwitterStreamFactory().getInstance();
+    private val stream = new TwitterStreamFactory().getInstance()
     private val logger = LoggerFactory.getLogger(this.getClass)
+    private var current = 0
 
     /**
      * Starts pushing twitter samples to the queue
@@ -21,7 +22,10 @@ class TwitterReceiver(processor:Actor) {
     def start() {
         logger.info("Starting receiving twitter posts")
         val listener = new StatusListener() {
-            def onStatus(status:Status) = processor ! status
+            def onStatus(status:Status) {
+                processors(current) ! status
+                current = (current + 1) % processors.size
+            }
             def onException(ex:Exception) = logger.error("Processing exception:", ex)
             def onTrackLimitationNotice(status:Int) {}
             def onDeletionNotice(status:StatusDeletionNotice) {}

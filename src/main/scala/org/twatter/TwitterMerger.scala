@@ -1,5 +1,7 @@
 package org.twatter
 
+import scala.actors._
+import Actor._
 import scala.collection.JavaConversions._
 import java.io.{File, BufferedWriter, FileWriter}
 import java.io.{BufferedReader, FileReader}
@@ -29,11 +31,21 @@ class TwitterMerger(idPath:String, rawPath:String, filename:String) {
         logger.info("Merging files from {} and {}", idPath, rawPath)
         idDirectory.listFiles
             .filter  { topic => topic.getName != "twatter-topics" }
-            .foreach { topic =>
-                val posts = readPosts(topic)
-                val name  = topic.getName.split("-").last
-                saveTopic(name, posts)
-            }
+            .foreach { topic => processTopic(topic) }
+    }
+
+    /**
+     * A helper method to abstract away processing a file
+     *
+     * @param topic The input file for the specified topic
+     */
+    private def processTopic(topic:File) {
+        actor {
+            logger.debug("Processing topic {}", topic.getName)
+            val posts = readPosts(topic)
+            val name  = topic.getName.split("-").last
+            saveTopic(name, posts)
+        }
     }
 
     /**
@@ -57,7 +69,6 @@ class TwitterMerger(idPath:String, rawPath:String, filename:String) {
      * @param posts The posts for the specified file to save
      */
     private def saveTopic(topic:String, posts:Iterator[String]) {
-        logger.debug("Saving topic {}", topic)
         val file   = new File(output, "twatter-topic-" + topic)
         val writer = new BufferedWriter(new FileWriter(file))
         try {

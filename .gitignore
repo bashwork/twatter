@@ -1,3 +1,7 @@
 *.swp
-lib
-build
+lib/
+build/
+target/
+lib_managed/
+src_managed/
+project/boot/

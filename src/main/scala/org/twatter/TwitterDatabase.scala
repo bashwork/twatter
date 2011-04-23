@@ -33,6 +33,10 @@ class TwitterDatabase(filename:String, database:JedisPool) {
         val file   = new File(output, "twatter-topics")
         val writer = new BufferedWriter(new FileWriter(file))
         try {
+            writer.write("# Total Posts: ")
+            writer.write(redis.get(TwitterRedis.postsCountKey))
+            writer.newLine()
+
             redis.smembers(TwitterRedis.topicsKey).toList.map { topic =>
                 (redis.get(TwitterRedis.topicCountKey(topic)).toInt, topic)
             }.sortWith { (l,r) => l._1 > r._1 }.foreach { topic =>

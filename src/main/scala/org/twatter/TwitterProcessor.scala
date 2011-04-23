@@ -83,9 +83,18 @@ class TwitterProcessor(filename:String, database:JedisPool,
                 redis.sadd(TwitterRedis.topicsKey,  text)
                 redis.sadd(TwitterRedis.topicKey(text), id)
                 redis.incr(TwitterRedis.topicCountKey(text))
+                redis.incr(TwitterRedis.postsCountKey)
             }
         } finally {
             database.returnResource(redis)
         }
+    }
+}
+
+object TwitterProcessor {
+    def apply(filename:String, database:JedisPool, poison:List[String]) : Actor = {
+        val processor = new TwitterProcessor(filename, database, poison)
+        processor.start
+        processor
     }
 }

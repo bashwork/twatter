@@ -1,5 +1,7 @@
 package org.twatter.summary
 
+import scala.actors._
+import Actor._
 import scala.collection.mutable.HashMap
 import scala.collection.JavaConversions._
 import java.io.{File, BufferedWriter, FileWriter}
@@ -24,12 +26,21 @@ class TwitterSummarizer(inputPath:String, outputPath:String, percent:Double) {
      */
     def start() {
         logger.info("Summarizing files from {} to {}", inputPath, outputPath)
-        inputs.listFiles.foreach { input =>
-                val lines   = extractLines(input)
-                val words   = countWords(lines)
-                val summary = countLines(lines, words)
-                saveSummary(input.getName, summary)
-            }
+        inputs.listFiles.foreach { input => processFile(input) }
+    }
+
+    /**
+     * Helper method to run each file processing in a single thread
+     *
+     * @param topic The input file for the specified topic
+     */
+    private def processFile(input:File) {
+        actor {
+            val lines   = extractLines(input)
+            val words   = countWords(lines)
+            val summary = countLines(lines, words)
+            saveSummary(input.getName, summary)
+        }
     }
 
     /**
@@ -89,7 +100,9 @@ class TwitterSummarizer(inputPath:String, outputPath:String, percent:Double) {
         val file   = new File(output, name + "-summary")
         val writer = new BufferedWriter(new FileWriter(file))
         try {
-            lines.foreach { line => writer.write(line) }
+            lines.foreach { line =>
+                writer.write(line); writer.write(".")
+            }
         } finally {
             writer.close
         }
