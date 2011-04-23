@@ -10,6 +10,10 @@ import org.slf4j.{Logger, LoggerFactory}
 /**
  * Actor used to process new twitter messages to file and to
  * redis.
+ *
+ * @param filename The directory to store the resulting posts in
+ * @param database The redis database pool
+ * @param poison A list of poison words to drop posts with
  */
 class TwitterProcessor(filename:String, database:JedisPool,
     poison: List[String]) extends Actor {
@@ -21,6 +25,7 @@ class TwitterProcessor(filename:String, database:JedisPool,
      * The main acting loop for receiving new messages
      */
     def act() {
+        logger.info("Starting processing twitter messages to {}", filename)
         loop {
             react {
                 case status:Status => {
@@ -55,6 +60,7 @@ class TwitterProcessor(filename:String, database:JedisPool,
     private def saveToFile(status:Status) {
         val file   = new File(output, status.getId.toString)
         val writer = new BufferedWriter(new FileWriter(file))
+
         try {
             writer.write(status.getText)
         } finally {
@@ -69,6 +75,7 @@ class TwitterProcessor(filename:String, database:JedisPool,
      */
     private def saveToDatabase(status:Status) {
         val redis = database.getResource()
+
         try {
             val id = status.getId.toString
             status.getHashtagEntities.foreach { tag =>

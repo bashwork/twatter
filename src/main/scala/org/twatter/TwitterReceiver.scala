@@ -4,6 +4,12 @@ import scala.actors.Actor
 import twitter4j._
 import org.slf4j.{Logger, LoggerFactory}
 
+/**
+ * A listener for twitter messages that forwards the new status
+ * messages to the supplied actor.
+ *
+ * @param processor The actor used to process new messages
+ */
 class TwitterReceiver(processor:Actor) {
 
     private val stream = new TwitterStreamFactory().getInstance();
@@ -13,6 +19,7 @@ class TwitterReceiver(processor:Actor) {
      * Starts pushing twitter samples to the queue
      */
     def start() {
+        logger.info("Starting receiving twitter posts")
         val listener = new StatusListener() {
             def onStatus(status:Status) = processor ! status
             def onException(ex:Exception) = logger.error("Processing exception:", ex)
@@ -27,6 +34,9 @@ class TwitterReceiver(processor:Actor) {
     /**
      * Stops pushing twitter samples to the queue
      */
-    def stop() { stream.shutdown() }
+    def stop() {
+        logger.info("Stopping receiving twitter posts")
+        stream.shutdown()
+    }
 }
 

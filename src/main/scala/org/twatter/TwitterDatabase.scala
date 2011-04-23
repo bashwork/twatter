@@ -19,6 +19,7 @@ class TwitterDatabase(filename:String, database:JedisPool) {
      * The main acting loop for receiving new messages
      */
     def start() {
+        logger.info("Dumping twatter database to {}", filename)
         saveTopicList
         saveTopics
     }
@@ -27,6 +28,7 @@ class TwitterDatabase(filename:String, database:JedisPool) {
      * Saves the topics from the database to file
      */
     private def saveTopicList() {
+        logger.info("Dumping twatter topic list")
         val redis = database.getResource()
         val file   = new File(output, "twatter-topics")
         val writer = new BufferedWriter(new FileWriter(file))
@@ -46,6 +48,7 @@ class TwitterDatabase(filename:String, database:JedisPool) {
      * Saves all the topics to file
      */
     private def saveTopics() {
+        logger.info("Dumping twatter topic identifiers")
         val redis = database.getResource()
         try {
             redis.smembers(TwitterRedis.topicsKey).toList.foreach { topic =>

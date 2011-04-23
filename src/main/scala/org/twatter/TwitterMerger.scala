@@ -8,8 +8,12 @@ import redis.clients.jedis.{Jedis, JedisPool}
 import org.slf4j.{Logger, LoggerFactory}
 
 /**
- * Actor used to process new twitter messages to file and to
- * redis.
+ * Helper utility to merge the id files and raw tweets into a single
+ * topic file seperated by new lines.
+ *
+ * @param idPath The path to the hash to id files
+ * @param rawPath The path to the raw posts files
+ * @param filename The path to store the merged results in
  */
 class TwitterMerger(idPath:String, rawPath:String, filename:String) {
 
@@ -22,38 +26,38 @@ class TwitterMerger(idPath:String, rawPath:String, filename:String) {
      * The main acting loop for receiving new messages
      */
     def start() {
-        idDirectory.listFiles.filter { topic => topic.getName != "twatter-topics" }
+        logger.info("Merging files from {} and {}", idPath, rawPath)
+        idDirectory.listFiles
+            .filter  { topic => topic.getName != "twatter-topics" }
             .foreach { topic =>
                 val posts = readPosts(topic)
                 val name  = topic.getName.split("-").last
                 saveTopic(name, posts)
-        }
+            }
     }
 
     /**
      * Reads all the posts specified by the specific topic file
+     *
+     * @param topic The input file for the specified topic
+     * @return The posts for the specified topic
      */
-    private def readPosts(topic:File) : List[String] = {
+    private def readPosts(topic:File) : Iterator[String] = {
         scala.io.Source.fromFile(topic.getAbsolutePath)
-            .getLines.toList.map { id => readFile(new File(rawDirectory, id)) }
-    }
-
-    /**
-     * Provides a file iterator around a file
-     */
-    private def readFile(topic:File) : String = {
-        val reader = new BufferedReader(new FileReader(topic))
-        try {
-            return reader.readLine
-        } finally {
-            reader.close
-        }
+            .getLines.map { id => 
+                val path = new File(rawDirectory, id).getAbsolutePath
+                scala.io.Source.fromFile(path).getLines.next
+            }
     }
 
     /**
      * Saves all the topics to file
+     *
+     * @param topic The topic to save results for
+     * @param posts The posts for the specified file to save
      */
-    private def saveTopic(topic:String, posts:List[String]) {
+    private def saveTopic(topic:String, posts:Iterator[String]) {
+        logger.debug("Saving topic {}", topic)
         val file   = new File(output, "twatter-topic-" + topic)
         val writer = new BufferedWriter(new FileWriter(file))
         try {
