@@ -44,13 +44,13 @@ class TwitterIndexer(inputPath:String, outputPath:String) {
      * @param topic The input file for the specified topic
      */
     private def processFile(input:File) {
-        //actor {
+        actor {
             val document = new Document()
             document.add(new Field("contents", new FileReader(input)))
             document.add(new Field("id", input.getName,
                 Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS))
             indexer.addDocument(document)
-        //}
+        }
     }
 
 }

@@ -17,6 +17,7 @@
       <zipfileset src="${lib.dir}/twitter4j-stream-2.2.1.jar" />
       <zipfileset src="${lib.dir}/twitter4j-async-2.2.1.jar" />
       <zipfileset src="${lib.dir}/jedis-1.5.2.jar" />
+      <zipfileset src="${lib.dir}/lucene-core-3.1.0.jar" />
 
       <manifest>
         <attribute name="Main-Class" value="${main.class}" />
