@@ -34,7 +34,35 @@ start to finish::
     ant package && ./config/runner.sh
 
 ============================================================
+What is Included
+============================================================
+
+* **Twatter** - Start the twatter service that stores every
+  tweet from the twitter sample stream to file and to redis.
+
+* **TwatterMerger** - Given a directory of post files and a
+  directory of files of each hash topic (with each post
+  containing said hash topic), merge all the posts to a
+  single file that can be summarized.
+
+* **TwatterDatabase** - Given a twatter redis database, dump
+  all the content to parseable files (including post count
+  and hash frequency).
+
+* **TwatterSummarizer** - Given a directory of files, create
+  summaries of each document (with a given percent of lines
+  to create).
+
+* **TwatterIndexer** - Given an input directory, create
+  lucene indexes of all the content with the id for each
+  document being its file name (twitter post id)
+
+============================================================
 Todo
 ============================================================
 
-...
+* real time lucene indexing
+* lucene index searching
+* lucene -> mahout index
+* mahout clustering/classifying
+* real time twitter to hadoop
