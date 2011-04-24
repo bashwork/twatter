@@ -4,8 +4,8 @@
   <!-- project variables -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <property name="author"     value="Galen Collins"/>
-  <property name="version"    value="1.0"/>
-  <property name="main.class" value="org.twatter.main.TwatterMain"/>
+  <property name="version"    value="1.0.0"/>
+  <property name="main.class" value="org.twatter.main.Twatter"/>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- build variables -->
