@@ -18,6 +18,7 @@
       <zipfileset src="${lib.dir}/twitter4j-async-2.2.1.jar" />
       <zipfileset src="${lib.dir}/jedis-1.5.2.jar" />
       <zipfileset src="${lib.dir}/lucene-core-3.1.0.jar" />
+      <zipfileset src="${lib.dir}/classifier4j-0.6.jar" />
 
       <manifest>
         <attribute name="Main-Class" value="${main.class}" />

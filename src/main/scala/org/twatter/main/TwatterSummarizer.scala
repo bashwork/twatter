@@ -1,7 +1,7 @@
 package org.twatter.main
 
 import org.apache.commons.cli.Options
-import org.twatter.summary.TwitterSummarizer
+import org.twatter.summary.Classifier4JSummarizer
 
 /**
  * The main launcher script for the service. This parses the following
@@ -29,7 +29,7 @@ object TwatterSummarizer extends TwatterMainTrait {
         if (!processDirectory(options("input"))) error
         if (!processDirectory(options("output"))) error
 
-        val process = new TwitterSummarizer(options("input"),
+        val process = new Classifier4JSummarizer(options("input"),
             options("output"), options("percent"))
         process.start
     }

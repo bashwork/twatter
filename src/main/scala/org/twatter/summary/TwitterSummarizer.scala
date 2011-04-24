@@ -9,8 +9,8 @@ import java.io.{BufferedReader, FileReader}
 import org.slf4j.{Logger, LoggerFactory}
 
 /**
- * Helper utility to merge the id files and raw tweets into a single
- * topic file seperated by new lines.
+ * Helper utility to summarize a given file based on word
+ * frequencies.
  *
  * @param inputPath The path to the documents to summarize
  * @param outputPath The path to store the merged results in
