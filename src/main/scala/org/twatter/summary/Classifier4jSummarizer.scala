@@ -6,7 +6,6 @@ import scala.collection.mutable.HashMap
 import scala.collection.JavaConversions._
 import java.io.{File, BufferedWriter, FileWriter}
 import java.io.{BufferedReader, FileReader}
-import org.slf4j.{Logger, LoggerFactory}
 import net.sf.classifier4J.summariser.SimpleSummariser
 
 /**
@@ -16,9 +15,9 @@ import net.sf.classifier4J.summariser.SimpleSummariser
  * @param inputPath The path to the documents to summarize
  * @param outputPath The path to store the merged results in
  */
-class Classifier4JSummarizer(inputPath:String, outputPath:String, percent:Double) {
+class Classifier4JSummarizer(inputPath:String, outputPath:String, percent:Double)
+    extends AbstractSummarizer {
 
-    private val logger = LoggerFactory.getLogger(this.getClass)
     private val inputs = new File(inputPath)
     private val output = new File(outputPath)
     private val lines  = math.max(math.ceil(percent * 10), 1).intValue

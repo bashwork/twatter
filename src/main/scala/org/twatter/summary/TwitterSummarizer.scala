@@ -6,7 +6,6 @@ import scala.collection.mutable.HashMap
 import scala.collection.JavaConversions._
 import java.io.{File, BufferedWriter, FileWriter}
 import java.io.{BufferedReader, FileReader}
-import org.slf4j.{Logger, LoggerFactory}
 
 /**
  * Helper utility to summarize a given file based on word
@@ -15,9 +14,9 @@ import org.slf4j.{Logger, LoggerFactory}
  * @param inputPath The path to the documents to summarize
  * @param outputPath The path to store the merged results in
  */
-class TwitterSummarizer(inputPath:String, outputPath:String, percent:Double) {
+class TwitterSummarizer(inputPath:String, outputPath:String, percent:Double)
+    extends AbstractSummarizer {
 
-    private val logger = LoggerFactory.getLogger(this.getClass)
     private val inputs = new File(inputPath)
     private val output = new File(outputPath)
 

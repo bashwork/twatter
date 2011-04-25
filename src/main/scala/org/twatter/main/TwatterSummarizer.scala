@@ -1,7 +1,7 @@
 package org.twatter.main
 
 import org.apache.commons.cli.Options
-import org.twatter.summary.Classifier4JSummarizer
+import org.twatter.summary.SummarizerFactory
 
 /**
  * The main launcher script for the service. This parses the following
@@ -26,10 +26,11 @@ object TwatterSummarizer extends TwatterMainTrait {
         implicit def _atos(a:Any) = a.asInstanceOf[String]
         implicit def _atoi(a:Any) = a.toString.toDouble
 
-        if (!processDirectory(options("input"))) error
+        if (!processDirectory(options("input")))  error
         if (!processDirectory(options("output"))) error
 
-        val process = new Classifier4JSummarizer(options("input"),
+        val method  = SummarizerFactory(options("method"))_
+        val process = method(options("input"),
             options("output"), options("percent"))
         process.start
     }
@@ -46,6 +47,7 @@ object TwatterSummarizer extends TwatterMainTrait {
         options.addOption("i", "input", true, "specify the input directory to use")
         options.addOption("p", "percent", true, "specify the percent to summarize")
         options.addOption("o", "output", true, "specify the output directory for files")
+        options.addOption("m", "method", true, "specify the summary method to use")
     }
 
     /**
@@ -55,6 +57,7 @@ object TwatterSummarizer extends TwatterMainTrait {
      */
     override def createDefaults() = Map[String,Any](
         "percent" -> "0.25",
+        "method"  -> "c4j",
         "input"   -> "documents",
         "output"  -> "twatter-summary")
 }
