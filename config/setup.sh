@@ -13,6 +13,10 @@ popd
 #------------------------------------------------------------ #
 # get twatter
 #------------------------------------------------------------ #
-wget http://the dropbox jar
-wget --output-document=poison.txt http://www.bannedwordlist.com/lists/swearWords.txt
-java -cp twatter.jar org.twatter.main.Twatter -p poison.txt -o twatter-out
+# Poison words came from:
+# http://www.bannedwordlist.com/lists/swearWords.txt
+#------------------------------------------------------------ #
+git clone https://github.com/bashwork/twatter.git
+cd twatter
+ant package
+java -cp jar/twatter.jar org.twatter.main.Twatter -p config/poison.txt -o build/twatter
