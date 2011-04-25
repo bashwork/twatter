@@ -1,4 +1,5 @@
 *.swp
+*.jar
 /jar/
 /build/
 target/

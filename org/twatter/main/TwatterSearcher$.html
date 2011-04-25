@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html>
         <head>
-          <title>org.twatter.main.TwatterIndexer</title>
+          <title>org.twatter.main.TwatterSearcher</title>
           <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
           
       <link href="../../../lib/template.css" rel="stylesheet" type="text/css" media="screen" />
@@ -18,13 +18,13 @@
 
       <div id="definition">
         <img src="../../../lib/object_big.png" />
-        <h1>TwatterIndexer</h1>
+        <h1>TwatterSearcher</h1>
       </div>
 
       <h4 class="signature" id="signature">
       <span class="kind">object</span>
       <span class="symbol">
-        <span class="name">TwatterIndexer</span>
+        <span class="name">TwatterSearcher</span>
         
         
         <span class="result"> extends <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a></span>
@@ -33,8 +33,9 @@
       <div class="fullcomment" id="comment"><div class="comment cmt"><p>The main launcher script for the service. This parses the following
 command line options:</p><p>- h | help    : prints this help text
 - v | version : prints the version of the server
-- o | output  : specify the output file of results
-- i | inputa  : specify the output file of results
+- i | input   : specify the input location of the index
+- q | query   : specify the query to execute against the index
+- c | count   : specify the number of results to return
 </p></div><div class="block">
             linear super types: <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>, AnyRef, <span class="extype" name="scala.Any">Any</span>
           </div>
@@ -54,7 +55,7 @@ command line options:</p><p>- h | help    : prints this help text
           <div id="ancestors">
                 <span class="filtertype">Inherited</span>
                 <ol><li class="hideall">Hide All</li><li class="showall">Show all</li></ol>
-                <ol id="linearization"><li class="in" name="org.twatter.main.TwatterIndexer">TwatterIndexer</li><li class="in" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</li><li class="in" name="scala.AnyRef">AnyRef</li><li class="in" name="scala.Any">Any</li></ol>
+                <ol id="linearization"><li class="in" name="org.twatter.main.TwatterSearcher">TwatterSearcher</li><li class="in" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</li><li class="in" name="scala.AnyRef">AnyRef</li><li class="in" name="scala.Any">Any</li></ol>
               </div>
           <div id="visbl">
               <span class="filtertype">Visibility</span>
@@ -313,7 +314,7 @@ part of compilation it is not possible to check whether the contents of the list
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterIndexer#createDefaults">
+    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterSearcher#createDefaults">
       <a id="createDefaults():Map[String, Any]"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -330,14 +331,14 @@ part of compilation it is not possible to check whether the contents of the list
             <div class="fullcomment"><div class="comment cmt"><p>Helper method to create the default options
 </p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>The default options map
 </p></dd></dl><div class="block">
-          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterIndexer">TwatterIndexer</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
+          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterSearcher">TwatterSearcher</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
         </div>
             
             
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterIndexer#createOptions">
+    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterSearcher#createOptions">
       <a id="createOptions():Options"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -354,7 +355,7 @@ part of compilation it is not possible to check whether the contents of the list
             <div class="fullcomment"><div class="comment cmt"><p>Helper method to create the option parser set
 </p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>The populated option parser set
 </p></dd></dl><div class="block">
-          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterIndexer">TwatterIndexer</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
+          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterSearcher">TwatterSearcher</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
         </div>
             
             
@@ -555,7 +556,7 @@ possible to check whether the contents of the list are of the requested typed.
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterIndexer#mainName">
+    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterSearcher#mainName">
       <a id="mainName:String"></a>
       <h4 class="signature">
       <span class="kind">val</span>
@@ -569,7 +570,7 @@ possible to check whether the contents of the list are of the requested typed.
       
             
             <div class="fullcomment"><div class="block">
-          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterIndexer">TwatterIndexer</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
+          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterSearcher">TwatterSearcher</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
         </div></div>
           
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#ne">
@@ -642,7 +643,7 @@ possible to check whether the contents of the list are of the requested typed.
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterIndexer#process">
+    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterSearcher#process">
       <a id="process(Map[String, Any],Unit):Unit"></a>
       <h4 class="signature">
       <span class="kind">def</span>
@@ -659,7 +660,7 @@ possible to check whether the contents of the list are of the requested typed.
             <div class="fullcomment"><div class="comment cmt"><p>Processes the command line arguments
 </p></div><dl class="paramcmts block"><dt class="param">options</dt><dd class="cmt"><p>The options to parse</p></dd><dt class="param">error</dt><dd class="cmt"><p>The error callback
 </p></dd></dl><div class="block">
-          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterIndexer">TwatterIndexer</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
+          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterSearcher">TwatterSearcher</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
         </div>
             
             
@@ -810,7 +811,7 @@ possible to check whether the contents of the list are of the requested typed.
             
           </div>
           
-    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterIndexer#version">
+    </li><li visbl="pub" data-isabs="false" name="org.twatter.main.TwatterSearcher#version">
       <a id="version:String"></a>
       <h4 class="signature">
       <span class="kind">val</span>
@@ -824,7 +825,7 @@ possible to check whether the contents of the list are of the requested typed.
       
             
             <div class="fullcomment"><div class="block">
-          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterIndexer">TwatterIndexer</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
+          definition classes: <a href="" class="extype" name="org.twatter.main.TwatterSearcher">TwatterSearcher</a> → <a href="TwatterMainTrait.html" class="extype" name="org.twatter.main.TwatterMainTrait">TwatterMainTrait</a>
         </div></div>
           
     </li><li visbl="pub" data-isabs="false" name="scala.AnyRef#wait">
