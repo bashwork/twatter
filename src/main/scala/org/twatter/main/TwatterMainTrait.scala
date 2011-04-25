@@ -17,6 +17,21 @@ trait TwatterMainTrait {
     val mainName : String
 
     /**
+     * Implicit conversions
+     */
+    implicit protected def _atos(a:Any) = a.asInstanceOf[String]
+    implicit protected def _atoi(a:Any) = a.toString.toInt
+
+    /**
+     * Processes the poison file option
+     *
+     * @param filename The filename of the poison file
+     */
+    protected def processQuery(query:String) : Boolean = {
+         (query != None) && !query.isEmpty
+    }
+
+    /**
      * Processes the poison file option
      *
      * @param filename The filename of the poison file
