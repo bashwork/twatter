@@ -31,11 +31,20 @@ start to finish::
     git clone https://github.com/bashwork/twatter.git
     cd twatter
     ant resolve
-    ant package && ./config/runner.sh
+    ant package && ./config/twatter.sh help
+
+You can also use sbt if you would like::
+  
+    ./bin/sbt clean compile package
 
 ============================================================
 What is Included
 ============================================================
+
+The following utilities are included in the library. They
+can be run on their own (using java -cp org.twatter.main.*)
+or by using one of the runner scripts in the config directory
+(windows/nix):
 
 * **Twatter** - Start the twatter service that stores every
   tweet from the twitter sample stream to file and to redis.
@@ -51,18 +60,23 @@ What is Included
 
 * **TwatterSummarizer** - Given a directory of files, create
   summaries of each document (with a given percent of lines
-  to create).
+  to create). There are three implementation currently
+  supported: classifier4J, OTS, and a quick hack I knocked
+  out with Lucene (todo).
 
 * **TwatterIndexer** - Given an input directory, create
   lucene indexes of all the content with the id for each
   document being its file name (twitter post id)
+
+* **TwatterSearcher** - Given a twatter index, perform
+  complex searches against all the twitter content currently
+  indexed.
 
 ============================================================
 Todo
 ============================================================
 
 * real time lucene indexing
-* lucene index searching
 * lucene -> mahout index
 * mahout clustering/classifying
 * real time twitter to hadoop
