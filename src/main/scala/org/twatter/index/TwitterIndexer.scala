@@ -2,7 +2,7 @@ package org.twatter.index
 
 import scala.actors._
 import Actor._
-//import scala.collection.JavaConversions._
+import java.util.concurrent.CountDownLatch
 import java.io.{File, BufferedWriter, FileWriter}
 import java.io.FileReader
 import org.slf4j.{Logger, LoggerFactory}
@@ -33,9 +33,11 @@ class TwitterIndexer(inputPath:String, outputPath:String) {
      */
     def start() {
         logger.info("Indexing files from {} to {}", inputPath, outputPath)
-        inputs.listFiles.foreach { file => processFile(file) }
-        //indexer.optimize()
-        indexer.close()
+        val files = inputs.listFiles
+        val latch = new CountDownLatch(files.size)
+        files.foreach { file => processFile(file, latch) }
+        latch.await
+        indexer.close
     }
 
     /**
@@ -43,13 +45,16 @@ class TwitterIndexer(inputPath:String, outputPath:String) {
      *
      * @param topic The input file for the specified topic
      */
-    private def processFile(input:File) {
+    private def processFile(input:File, latch:CountDownLatch) {
         actor {
             val document = new Document()
             document.add(new Field("contents", new FileReader(input)))
+            document.add(new Field("path", input.getAbsolutePath,
+                Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS))
             document.add(new Field("id", input.getName,
                 Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS))
             indexer.addDocument(document)
+            latch.countDown
         }
     }
 
