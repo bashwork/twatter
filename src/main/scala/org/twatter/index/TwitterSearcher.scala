@@ -43,9 +43,10 @@ class TwitterSearcher(indexPath:String, query:String, count:Int) {
         val search = parser.parse(query)
         val results = searcher.search(search, count)
         val scores = results.scoreDocs
+        val index = math.min(count, scores.length) - 1
 
         logger.info("Found {} possible matches", results.totalHits)
-        (0 to math.min(count, scores.length)).foreach { id =>
+        (0 to index).foreach { id =>
             parseMatch(searcher.doc(id), scores(id).score) }
     }
 
@@ -61,11 +62,11 @@ class TwitterSearcher(indexPath:String, query:String, count:Int) {
             val path = document.get("path")
             val content = new File(path).exists match {
                 case true => scala.io.Source.fromFile(path).mkString
-                case false => "Original tweet not available"
+                case false => "original tweet not available"
             }
 
             print("(" + score + ")")
-            print("[" + id + "]:" + content + "\n")
+            print("[" + id + "]:" + content)
         }
     }
 }
