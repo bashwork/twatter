@@ -40,6 +40,14 @@ object Twatter extends TwatterMainTrait {
 
         val receive = new TwitterReceiver(process)
         receive.start
+
+        Runtime.getRuntime.addShutdownHook(new Thread {
+            override def run { 
+                logger.info("Shutting down the twatter service")
+                process.foreach { _ ! "quit" }
+                receive.stop
+            }
+        })
     }
 
     /**
