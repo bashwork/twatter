@@ -32,11 +32,11 @@ if "%1" == "twatter" (
   goto end
 )
 if "%1" == "database" (
-  %START%.Database %OPTIONS%
+  %START%.TwatterDatabase %OPTIONS%
   goto end
 )
 if "%1" == "summarize" (
-  %START%.Summarizer %OPTIONS%
+  %START%.TwatterSummarizer %OPTIONS%
   goto end
 )
 
