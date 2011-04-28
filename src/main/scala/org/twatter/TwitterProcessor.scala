@@ -48,7 +48,7 @@ class TwitterProcessor(filename:String, database:JedisPool,
     private def shouldSaveStatus(status:Status) : Boolean = {
         if (poison.isEmpty) return true
         val shouldSave = status.getText.split(" ").map { _.toLowerCase }
-            .exists { word => poison.exists { _ contains word } }
+            .exists { word => poison.exists { word contains _ } }
         !shouldSave
     }
 

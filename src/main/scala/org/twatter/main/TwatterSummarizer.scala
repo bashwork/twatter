@@ -38,12 +38,10 @@ object TwatterSummarizer extends TwatterMainTrait {
     /**
      * Helper method to create the option parser set
      *
+     * @param options The options handle to add options to
      * @return The populated option parser set
      */
-    override def createOptions() : Options = {
-        val options = new Options()
-        options.addOption("h", "help", false, "print this help text")
-        options.addOption("v", "version", false, "print the version of the server")
+    override def addOptions(options:Options) : Options = {
         options.addOption("i", "input", true, "specify the input directory to use")
         options.addOption("p", "percent", true, "specify the percent to summarize")
         options.addOption("o", "output", true, "specify the output directory for files")

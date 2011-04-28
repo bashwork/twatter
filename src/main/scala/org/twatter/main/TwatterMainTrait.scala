@@ -78,9 +78,10 @@ trait TwatterMainTrait {
     /**
      * Helper method to create the option parser set
      *
+     * @param options The options handle to add options to
      * @return The populated option parser set
      */
-    def createOptions() : Options
+    def addOptions(options:Options) : Options
 
     /**
      * Helper method to create the default options
@@ -96,20 +97,32 @@ trait TwatterMainTrait {
      */
     def main(args: Array[String]) = {
         var defaults = createDefaults
-        val options  = createOptions
+        val options  = addOptions(createOptions)
         val parser   = new PosixParser()
         val results  = parser.parse(options, args)
 
         results.getOptions.foreach { o:Option =>
             o.getOpt match {
+                case "v" | "version"  => printVersion
+                case "h" | "help"     => printHelp(options)
                 case option:String if options.hasOption(option) =>
                      defaults += (options.getOption(option).getLongOpt -> o.getValue())
-                case "v" | "version"  => printVersion
-                case "h" | "help" | _ => printHelp(options)
+                case _ => printHelp(options)
           }
         }
 
         process(defaults, () => printHelp(options))
+    }
+
+    /**
+     * Helper method to create the option parser set
+     *
+     * @return The populated option parser set
+     */
+    private def createOptions() : Options = {
+        val options = new Options()
+        options.addOption("h", "help", false, "print this help text")
+        options.addOption("v", "version", false, "print the version of the server")
     }
 
     /**

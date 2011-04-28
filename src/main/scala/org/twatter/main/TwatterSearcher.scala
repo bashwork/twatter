@@ -36,12 +36,10 @@ object TwatterSearcher extends TwatterMainTrait {
     /**
      * Helper method to create the option parser set
      *
+     * @param options The options handle to add options to
      * @return The populated option parser set
      */
-    override def createOptions() : Options = {
-        val options = new Options()
-        options.addOption("h", "help", false, "print this help text")
-        options.addOption("v", "version", false, "print the version of the server")
+    override def addOptions(options:Options) : Options = {
         options.addOption("i", "input", true, "specify the input directory of the index")
         options.addOption("q", "query", true, "specify the query to execute on this index")
         options.addOption("c", "count", true, "specify the number of results to return")

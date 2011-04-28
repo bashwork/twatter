@@ -37,12 +37,10 @@ object TwatterMerger extends TwatterMainTrait {
     /**
      * Helper method to create the option parser set
      *
+     * @param options The options handle to add options to
      * @return The populated option parser set
      */
-    override def createOptions() : Options = {
-        val options = new Options()
-        options.addOption("h", "help", false, "print this help text")
-        options.addOption("v", "version", false, "print the version of the server")
+    override def addOptions(options:Options) : Options = {
         options.addOption("r", "raws", true, "specify the raw message directory to use")
         options.addOption("t", "topics", true, "specify the topics directory to use")
         options.addOption("o", "output", true, "specify the output directory for files")
