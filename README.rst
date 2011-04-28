@@ -80,3 +80,12 @@ Todo
 * lucene -> mahout index
 * mahout clustering/classifying
 * real time twitter to hadoop
+
+============================================================
+Tips
+============================================================
+
+If you need to retrieve dependencies behind a proxy, make
+sure to set the correct ant options before running ``ant resolve``::
+
+    export ANT_OPTS="-Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=5865"

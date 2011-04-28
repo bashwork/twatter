@@ -17,6 +17,22 @@ class Project(info: ProjectInfo) extends DefaultProject(info)
     override def mainClass = Some("org.twatter.main.Twatter")
 
     /**
+     * POM cofiguration
+     */
+    override def pomExtra =
+        <licenses>
+            <license>
+                <name>Apache 2</name>
+                <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+                <distribution>repo</distribution>
+            </license>
+        </licenses>
+
+    /**
+     * Maven cofiguration
+     */
+
+    /**
      * Dependency cofiguration
      */
     val commonsCli      = "commons-cli" % "commons-cli" % "1.2"
