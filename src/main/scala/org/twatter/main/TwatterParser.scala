@@ -1,22 +1,21 @@
 package org.twatter.main
 
 import org.apache.commons.cli.Options
-import org.twatter.index.TwitterIndexer
+import org.twatter.parse.StanfordParser
 
 /**
  * The main launcher script for the service. This parses the following
  * command line options:
  *
- * - h | help    : prints this help text
- * - v | version : prints the version of the server
- * - o | output  : specify the output file of results
- * - i | inputa  : specify the output file of results
+ * - i | input   : specify the input directory to parse
+ * - o | output  : specify the output directory of the results
+ * - p | parser  : specify the location of the parser
  */
-object TwatterIndexer extends TwatterMainTrait {
+object TwatterParser extends TwatterMainTrait {
 
     override val version  = "1.0.0"
-    override val mainName = "org.twatter.main.TwatterIndexer"
-    
+    override val mainName = "org.twatter.main.TwatterParser"
+
     /**
      * Processes the command line arguments
      *
@@ -27,10 +26,11 @@ object TwatterIndexer extends TwatterMainTrait {
 
         if (!processDirectory(options("input")))  error
         if (!processDirectory(options("output"))) error
+        if (!testFile(options("parser"))) error
 
-        val indexer = new TwitterIndexer(options("input"),
-            options("output"))
-        indexer.start
+        val process = new StanfordParser(options("input"),
+            options("output"), options("parser"))
+        process.start
     }
 
     /**
@@ -40,8 +40,9 @@ object TwatterIndexer extends TwatterMainTrait {
      * @return The populated option parser set
      */
     override def addOptions(options:Options) : Options = {
-        options.addOption("i", "input", true, "specify the input directory for files")
-        options.addOption("o", "output", true, "specify the output directory for the indexes")
+        options.addOption("i", "input", true, "specify the input directory to parse")
+        options.addOption("o", "output", true, "specify the output directory of the results")
+        options.addOption("p", "parser", true, "specify the location of the parser")
     }
 
     /**
@@ -50,8 +51,9 @@ object TwatterIndexer extends TwatterMainTrait {
      * @return The default options map
      */
     override def createDefaults() = Map[String,Any](
+        "parser"  -> "config/englishPCFG.ser.gz",
         "input"   -> "twatter",
-        "output"  -> "twatter-indexes")
+        "output"  -> "twatter-parsed")
 }
 
 

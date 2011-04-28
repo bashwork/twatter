@@ -23,8 +23,7 @@ object TwatterSummarizer extends TwatterMainTrait {
      * @param error The error callback
      */
     override def process(options: Map[String,Any], error: Unit) {
-        implicit def _atos(a:Any) = a.asInstanceOf[String]
-        implicit def _atoi(a:Any) = a.toString.toDouble
+        implicit def _atod(a:Any) = a.toString.toDouble
 
         if (!processDirectory(options("input")))  error
         if (!processDirectory(options("output"))) error

@@ -23,7 +23,6 @@ object TwatterMerger extends TwatterMainTrait {
      * @param error The error callback
      */
     override def process(options: Map[String,Any], error: Unit) {
-        implicit def _atos(a:Any) = a.asInstanceOf[String]
 
         if (!processDirectory(options("output"))) error
         if (!processDirectory(options("topics"))) error

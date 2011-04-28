@@ -39,6 +39,10 @@ if "%1" == "summarize" (
   %START%.TwatterSummarizer %OPTIONS%
   goto end
 )
+if "%1" == "Parse" (
+  %START%.TwatterParser %OPTIONS%
+  goto end
+)
 
 goto help
 :end

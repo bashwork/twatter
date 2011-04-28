@@ -25,6 +25,7 @@ object TwatterSearcher extends TwatterMainTrait {
      * @param error The error callback
      */
     override def process(options: Map[String,Any], error: Unit) {
+
         if (!processDirectory(options("input")))  error
         if (!processQuery(options("query")))  error
 

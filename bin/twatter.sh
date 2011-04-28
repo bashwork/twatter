@@ -17,9 +17,10 @@ case "$1" in
   twatter)   COMMAND="${START}.Twatter"           ;;
   database)  COMMAND="${START}.TwatterDatabase"   ;;
   summarize) COMMAND="${START}.TwatterSummarizer" ;;
+  parse)     COMMAND="${START}.TwatterParser" ;;
 
   *)
-  echo "Usage: ${0} {index|search|merge|twatter|database|summarize}"
+  echo "Usage: ${0} {index|search|merge|twatter|database|summarize|parse}"
   exit 1
   ;;
 esac

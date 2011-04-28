@@ -23,29 +23,42 @@ trait TwatterMainTrait {
     implicit protected def _atoi(a:Any) = a.toString.toInt
 
     /**
-     * Processes the poison file option
+     * Processes the input query
      *
-     * @param filename The filename of the poison file
+     * @param query The query string to process
+     * @return true if the query is valid, false otherwise
      */
     protected def processQuery(query:String) : Boolean = {
          (query != None) && !query.isEmpty
     }
 
     /**
-     * Processes the poison file option
+     * Processes the given input file
      *
-     * @param filename The filename of the poison file
+     * @param filename The file to process
+     * @return The contents of the file as a List[String]
      */
     protected def processFile(filename:String) : List[String] = {
-        if (!filename.isEmpty || new java.io.File(filename).exists)
+        if (testFile(filename))
             scala.io.Source.fromFile(filename).getLines.toList
         else List[String]()
+    }
+
+    /**
+     * Check to see if a file exists
+     *
+     * @param filename The file to test for existance
+     * @return true if the file exists, false otherwise
+     */
+    protected def testFile(filename:String) : Boolean = {
+        !filename.isEmpty || new java.io.File(filename).exists
     }
 
     /**
      * Processes the redis option
      *
      * @param uri The uri of the redis instance
+     * @return The initialized JedisPool factory
      */
     protected def processRedis(uri:String) : JedisPool = {
         val pieces = uri.split(":")
@@ -57,6 +70,7 @@ trait TwatterMainTrait {
      * Processes the output directory option
      *
      * @param filename The filename of the poison file
+     * @return true if the directory exists, false otherwise
      */
     protected def processDirectory(filename:String) : Boolean = {
         if (filename.isEmpty) return false

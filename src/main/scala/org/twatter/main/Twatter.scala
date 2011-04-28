@@ -27,8 +27,6 @@ object Twatter extends TwatterMainTrait {
      * @param error The error callback
      */
     override def process(options: Map[String,Any], error: Unit) {
-        implicit def _atos(a:Any) = a.asInstanceOf[String]
-        implicit def _atoi(a:Any) = a.toString.toInt
 
         if (!processDirectory(options("output"))) error
         val poison  = processFile(options("poison"))
