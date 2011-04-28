@@ -1,4 +1,5 @@
 *.swp
+*.ser.gz
 /lib/
 /jar/
 /build/
