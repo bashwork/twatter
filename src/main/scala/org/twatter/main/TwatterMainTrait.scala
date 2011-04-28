@@ -12,7 +12,7 @@ import redis.clients.jedis.JedisPool
  */
 trait TwatterMainTrait {
 
-    private val logger = LoggerFactory.getLogger(this.getClass)
+    protected val logger = LoggerFactory.getLogger(this.getClass)
     val version  : String
     val mainName : String
 
