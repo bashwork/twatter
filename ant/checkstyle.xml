@@ -1,0 +1,23 @@
+<project xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- install the checkstyle tasks -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="checkstyle.install" depends="checkstyle.download"
+          description="install the new checkstyle download">
+    <taskdef resource="checkstyle.properties">
+      <classpath path="classpath" />
+    </taskdef>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- runs the code base against checkstyle -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="checkstyle" depends="checkstyle.install" description="run the checkstyle project">
+    <checkstyle config="config/sun_checks.xml">
+      <fileset dir="src" includes="**/*.java" />
+      <formatter type="plain" toFile="build/checkstyle.errors" />
+    </checkstyle>
+  </target>
+
+</project>

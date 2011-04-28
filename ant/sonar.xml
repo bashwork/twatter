@@ -1,32 +1,39 @@
 <project xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- sonar properties -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <property name="sonar.url" value="http://repository.codehaus.org/org/codehaus/sonar-plugins/sonar-ant-task/1.0/sonar-ant-task-1.0.jar"/>
+  <property name="sonar.version" value="1.0"/>
+  <property name="sonar.jar" value="sonar-ant-task-${sonar.version}.jar"/>
+  <available property="sonar.installed" file="${lib.dir}/${sonar.jar}"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- get and install sonar -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <target name="download-sonar" description="retrieve ivy installation">
+  <target name="sonar.download" unless="sonar.installed" description="retrieve sonar ant tasks">
     <get src="${sonar.url}" dest="${sonar.jar}.download" usetimestamp="true" />
-    <move src="${sonar.jar}.download" tofile="${sonar.jar}" />
+    <move src="${sonar.jar}.download" tofile="${lib.dir}/${sonar.jar}" />
   </target>
 
-  <target name="install-sonar" depends="download-sonar" description="install the new sonar download">
+  <target name="sonar.install" depends="sonar.download" description="install the new sonar download">
     <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
       <classpath path="classpath" />
     </taskdef>
   </target>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- retrieves all the dependencies using ivy -->
+  <!-- run the sonar task -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <target name="sonar" depends="install-sonar" description="run the sonar project">
+  <target name="sonar" depends="install-sonar" description="run the sonar task">
     <property key="sonar.jdbc.url" value="jdbc:derby://localhost:1527/sonar;create=true" />
     <property key="sonar.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" />
 
-    <sonar:sonar workdir="${basedir}">
-      <sources><path location="${src.dir}" /></sources>
-      <tests><path location="${src.dir}" /></tests>
+    <sonar:sonar workdir="${build.dir}/sonar">
+      <sources><path location="${src.dir}/main" /></sources>
+      <tests><path location="${src.dir}/test" /></tests>
       <binaries><path location="${build.dir}" /></binaries>
       <libraries><path location="${lib.dir}" /></libraries>
-
     </sonar:sonar>
   </target>
 

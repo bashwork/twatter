@@ -20,6 +20,7 @@
     <dependency org="classifier4j" name="classifier4j" rev="0.6"/>
     <!--
     <dependency org="net.lag" name="configgy" rev="2.0"/>
+    <dependency org="com.puppycrawl.tools" name="checkstyle" rev="5.3"/>
     -->
   </dependencies>
 </ivy-module>
