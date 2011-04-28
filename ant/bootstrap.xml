@@ -16,6 +16,7 @@
   <property name="lib.dir"    location="${basedir}/lib"/>
   <property name="docs.dir"   location="${build.dir}/docs"/>
   <property name="dist.dir"   location="${build.dir}/dist"/>
+  <property name="config.dir" location="${basedir}/config"/>
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- ivy configuration -->
@@ -60,6 +61,7 @@
   <import file="run.xml" />
   <import file="dist.xml" />
   <import file="install.xml" />
+  <import file="external.xml" />
 
 </project>
 

@@ -43,7 +43,7 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- perform any initialization -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <target name="init" description="initilze the system" >
+  <target name="init" depends="external" description="initilze the system" >
     <taskdef resource="scala/tools/ant/antlib.xml" classpathref="classpath" />
   </target>
 
