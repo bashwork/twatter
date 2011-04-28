@@ -25,7 +25,7 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!-- run the sonar task -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <target name="sonar" depends="install-sonar" description="run the sonar task">
+  <target name="sonar" depends="sonar.install" description="run the sonar task">
     <property key="sonar.jdbc.url" value="jdbc:derby://localhost:1527/sonar;create=true" />
     <property key="sonar.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" />
 

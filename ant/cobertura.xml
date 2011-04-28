@@ -1,0 +1,24 @@
+<project xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- install cobertura -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="cobertura.install" description="install the copertura tasks">
+    <taskdef resource="tasks.properties">
+      <classpath path="classpath" />
+    </taskdef>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- run the sonar task -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="cobertura" depends="cobertura.install" description="run the sonar task">
+    <cobertura-instrument todir="${build.dir}/cobertura">
+      <fileset dir="${build.dir}">
+        <include name="**/*.class" />
+        <exclude name="**/*Spec*.class" />
+      </fileset>
+    </covertura-instrument>
+  </target>
+
+</project>
