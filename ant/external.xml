@@ -15,6 +15,7 @@
   <!-- perform any initialization -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <target name="external" description="grab all the external dependencies" >
+    <mkdir dir="${lib.dir}" />
     <antcall target="external.stanford" />
   </target>
 
