@@ -1,0 +1,30 @@
+<project xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- findbugs properties -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <property name="findbugs.version" value="1.0"/>
+  <property name="findbugs.jar" value="findbugs-${findbugs.version}.jar"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- get and install findbugs -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="findbugs.install" depends="resolve" description="install the new findbugs download">
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+      <classpath path="classpath" />
+    </taskdef>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- run the sonar task -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="findbugs" depends="findbugs.install" description="run the findbugs task">
+
+    <findbugs home="${lib.dir}/${findbugs.jar}" output="html" outputFile="${build.dir}/findbugs.html">
+      <auxClasspath path="classpath" />
+      <sourcePath path="${src.dir}" />
+      <class location="${jar.dir}/${ant.project.name}.jar" />
+    </findbugs>
+  </target>
+
+</project>
