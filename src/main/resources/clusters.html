@@ -2,7 +2,7 @@
   <head>
     <title>Bubble Chart</title>
     <script type="text/javascript" src="js/protovis-r3.2.js"></script>
-    <script type="text/javascript" src="js/twatter.js"></script>
+    <script type="text/javascript" src="js/twatter-clusters.js"></script>
     <style type="text/css">
 
 body {
@@ -16,14 +16,7 @@ body {
     <script type="text/javascript+protovis">
 
 /* Produce a flat hierarchy of the Flare classes. */
-var classes = pv.nodes(pv.flatten(twatter).leaf(Number).array());
-classes.slice(1).forEach(function(d) {
-  d.nodeName = "twatter." + d.nodeValue.keys.join(".");
-  var i = d.nodeName.lastIndexOf(".");
-  d.className = d.nodeName.substring(i + 1);
-  d.packageName = d.nodeName.substring(0, i);
-  d.nodeValue = d.nodeValue.value;
-});
+var classes = pv.nodes(twatter);
 
 /* For pretty number formatting. */
 var format = pv.Format.number();
@@ -36,16 +29,16 @@ vis.add(pv.Layout.Pack)
     .top(-50)
     .bottom(-50)
     .nodes(classes)
-    .size(function(d) d.nodeValue)
+    .size(function(d) d.nodeValue.size)
     .spacing(0)
     .order(null)
   .node.add(pv.Dot)
-    .fillStyle(pv.Colors.category20().by(function(d) d.packageName))
+    .fillStyle(pv.Colors.category20().by(Math.random))
     .strokeStyle(function() this.fillStyle().darker())
     .visible(function(d) d.parentNode)
-    .title(function(d) d.nodeName + ": " + format(d.nodeValue))
+    .title(function(d) d.nodeValue.id)
   .anchor("center").add(pv.Label)
-    .text(function(d) d.className.substring(0, Math.sqrt(d.nodeValue) >> 4));
+    .text(function(d) d.nodeValue.words);
 
 vis.render();
 
