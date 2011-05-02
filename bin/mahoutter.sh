@@ -40,22 +40,83 @@ case "$1" in
       --namedVector                                           \
       --minDF 4                                               \
       --maxDFPercent 75                                       \
-      --weight TFIDF                                          \
+      --weight tfidf                                          \
       --norm 2                                 
   ;;
 
   #---------------------------------------------------------- #
-  # perorm kmeans on a vector set
+  # make a sequence directory sparse with tf
+  #---------------------------------------------------------- #
+  sparsetf) ${MAHOUT_HOME}/bin/mahout seq2sparse              \
+      --input build/twatter-sequences                         \
+      --output build/twatter-vectors                          \
+      --maxNGramSize 2                                        \
+      --namedVector                                           \
+      --minDF 4                                               \
+      --maxDFPercent 75                                       \
+      --weight tf                                             \
+      --numReducers 3                                         \
+      --norm 2                                 
+  ;;
+
+  #---------------------------------------------------------- #
+  # perform kmeans on a vector set
   # @param $2 the number of clusters to create
   #---------------------------------------------------------- #
   kmeans) ${MAHOUT_HOME}/bin/mahout kmeans                    \
       --input build/twatter-vectors/tfidf-vectors             \
       --output build/twatter-clusters                         \
       --clusters build/twatter-clusters-initial               \
-      --maxIter 10                                            \
+      --maxIter 20                                            \
       --numClusters $2                                        \
       --clustering                                            \
       --overwrite                                 
+  ;;
+
+  #---------------------------------------------------------- #
+  # perform dirichlet clustering on a vector set
+  # @param $2 the number of clusters to create
+  #---------------------------------------------------------- #
+  dirichlet) ${MAHOUT_HOME}/bin/mahout dirichlet              \
+      --input build/twatter-vectors/tf-vectors                \
+      --output build/twatter-dirichlet                        \
+      --maxIter 20                                            \
+      -k $2                                                   \
+      --overwrite                                 
+  ;;
+  #---------------------------------------------------------- #
+  # perform lda on a vector set
+  # @param $2 the number of clusters to create
+  #---------------------------------------------------------- #
+  lda) ${MAHOUT_HOME}/bin/mahout lda                          \
+      --input build/twatter-vectors/tf-vectors                \
+      --output build/twatter-lda                              \
+      --maxIter 20                                            \
+      --numTopics $2                                          \
+      --numWords 50000                                        \
+      --overwrite                                 
+  ;;
+
+  #---------------------------------------------------------- #
+  # perform lda on a vector set
+  # @param $2 the number of clusters to create
+  #---------------------------------------------------------- #
+  lda) ${MAHOUT_HOME}/bin/mahout lda                          \
+      --input build/twatter-vectors/tf-vectors                \
+      --output build/twatter-lda                              \
+      --maxIter 20                                            \
+      --numTopics $2                                          \
+      --numWords 50000                                        \
+      --overwrite                                 
+  ;;
+
+  #---------------------------------------------------------- #
+  # dump the lda generated topics
+  #---------------------------------------------------------- #
+  topics) ${MAHOUT_HOME}/bin/mahout ldatopics                 \
+      --input build/twatter-lda/state-20                      \
+      --dictionary build/twatter-vectors/dictionary.file-0    \
+      --dictionaryType sequenceFile                                 
   ;;
 
   #---------------------------------------------------------- #
