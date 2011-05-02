@@ -84,18 +84,6 @@ case "$1" in
       -k $2                                                   \
       --overwrite                                 
   ;;
-  #---------------------------------------------------------- #
-  # perform lda on a vector set
-  # @param $2 the number of clusters to create
-  #---------------------------------------------------------- #
-  lda) ${MAHOUT_HOME}/bin/mahout lda                          \
-      --input build/twatter-vectors/tf-vectors                \
-      --output build/twatter-lda                              \
-      --maxIter 20                                            \
-      --numTopics $2                                          \
-      --numWords 50000                                        \
-      --overwrite                                 
-  ;;
 
   #---------------------------------------------------------- #
   # perform lda on a vector set
@@ -134,17 +122,18 @@ case "$1" in
   #---------------------------------------------------------- #
   # train a mahout bayesian classifier
   #---------------------------------------------------------- #
-  train) ${MAHOUT_HOME}/bin/mahout trainClassifier            \
-      --input build/twatter                                   \
+  train) ${MAHOUT_HOME}/bin/mahout trainclassifier            \
+      --input build/twatter-merged-train                      \
       --output build/twatter-model
   ;;
 
   #---------------------------------------------------------- #
   # test a mahout bayesian classifier
   #---------------------------------------------------------- #
-  test) ${MAHOUT_HOME}/bin/mahout testClassifier              \
-      -d build/twatter                                        \
-      --model build/twatter-model
+  test) ${MAHOUT_HOME}/bin/mahout testclassifier              \
+      -d build/twatter-merged-test                            \
+      --model build/twatter-model                             \
+      -v 2>&1 | tee -a /build/classifierResults.log
   ;;
 
   #---------------------------------------------------------- #
