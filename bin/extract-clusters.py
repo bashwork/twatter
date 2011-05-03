@@ -13,12 +13,12 @@ from optparse import OptionParser
 class Cluster(object):
     ''' A helper class to organize the results
 
-    @attr id The unique id of this cluster
+    @attr name The unique id of this cluster
     @attr weight The current size of this cluster
     @attr terms The top terms contributing to this cluster
     '''
-    def __init__(self, id, weight=0):
-        self.id     = id
+    def __init__(self, name, weight=0):
+        self.name   = name
         self.weight = weight
         self.terms  = []
 
@@ -38,9 +38,9 @@ def parseClusters(input):
     for line in input:	
         if not inCluster:
             if "{n=" in line: # locate "{n="
-                cluster = line.split("{")[0]
+                name    = line.split("{")[0]
                 weight  = line.split("{")[1].split(" ")[0].split("=")[1]
-                results.append(Cluster(id, int(weight)))
+                results.append(Cluster(name, int(weight)))
                 inCluster = True
         else:
             if "=>" in line: # Locate Top Terms
@@ -61,7 +61,7 @@ def sortBySize(clusters, count):
     @return Count number of clusters from the list
     '''
     sortedBySize = sorted(clusters, key=lambda c: c.weight, reverse=True)
-    return (sortedBySize[id] for id in range(0, min(count, len(clusters))))
+    return (sortedBySize[idx] for idx in range(0, min(count, len(clusters))))
 
 def formatCluster(cluster):
     ''' Formats a given cluster in the form expected by
@@ -70,8 +70,8 @@ def formatCluster(cluster):
     @param cluster The cluster to format
     @return The formatted cluster output
     '''
-    format = "{ id: %s, weight: %d, terms: %s }\n"
-    return format % (cluster.id, cluster.weight, str(cluster.terms))
+    format = "\t{ id: '%s', weight: %d, terms: %s },\n"
+    return format % (cluster.name, cluster.weight, str(cluster.terms))
 
 #---------------------------------------------------------------------------# 
 # runner script
