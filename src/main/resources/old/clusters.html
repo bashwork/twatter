@@ -18,7 +18,26 @@ var vis = new pv.Panel()
     .width(document.body.clientWidth)
     .height(document.body.clientHeight);
 
-var test = vis.add(pv.Layout.Pack)
+/*
+var bubble = vis.add(pv.Layout.Pack)
+    .top(-50)
+    .bottom(-50)
+    .nodes(pv.nodes(twatter))
+    .size(function(d) d.nodeValue.weight)
+    .spacing(0)
+    .order(null)
+  .node.add(pv.Dot)
+    .fillStyle(pv.Colors.category20().by(Math.random))
+    .strokeStyle(function() this.fillStyle().darker())
+    .visible(function(d) d.parentNode)
+    .title(function(d) d.nodeValue.id);
+   
+ bubble.anchor("center").add(pv.Label)
+    .font('bold 11px Georgia')
+    .text(function(d) d.nodeValue.terms);
+*/
+
+var bubble = vis.add(pv.Layout.Pack)
     .top(-50)
     .bottom(-50)
     .nodes(pv.nodes(twatter))
@@ -31,15 +50,8 @@ var test = vis.add(pv.Layout.Pack)
     .visible(function(d) d.parentNode)
     .title(function(d) d.nodeValue.id);
 
- test.data(function(d) d.nodeValue.terms)
-    .add(pv.Dot);
-   //.anchor("center").add(pv.Label)
-   // .font('bold 11px Georgia')
-   // .text(function(d) d);
-   
- //test.anchor("center").add(pv.Label)
- //   .font('bold 11px Georgia')
- //   .text(function(d) d.nodeValue.terms);
+var inner = bubble.add(pv.Layout.Pack);
+   //.node.add(pv.Dot);
 
 vis.render();
 
