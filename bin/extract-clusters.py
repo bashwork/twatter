@@ -14,12 +14,12 @@ class Cluster(object):
     ''' A helper class to organize the results
 
     @attr name The unique id of this cluster
-    @attr weight The current size of this cluster
+    @attr value The current size of this cluster
     @attr terms The top terms contributing to this cluster
     '''
-    def __init__(self, name, weight=0):
+    def __init__(self, name, value=0):
         self.name   = name
-        self.weight = weight
+        self.value = value
         self.terms  = []
 
 #---------------------------------------------------------------------------# 
@@ -39,8 +39,8 @@ def parseClusters(input):
         if not inCluster:
             if "{n=" in line: # locate "{n="
                 name    = line.split("{")[0]
-                weight  = line.split("{")[1].split(" ")[0].split("=")[1]
-                results.append(Cluster(name, int(weight)))
+                value  = line.split("{")[1].split(" ")[0].split("=")[1]
+                results.append(Cluster(name, int(value)))
                 inCluster = True
         else:
             if "=>" in line: # Locate Top Terms
@@ -60,7 +60,7 @@ def sortBySize(clusters, count):
     @param count The number of clusters to extract
     @return Count number of clusters from the list
     '''
-    sortedBySize = sorted(clusters, key=lambda c: c.weight, reverse=True)
+    sortedBySize = sorted(clusters, key=lambda c: c.value, reverse=True)
     return (sortedBySize[idx] for idx in range(0, min(count, len(clusters))))
 
 def formatCluster(cluster):
@@ -70,8 +70,8 @@ def formatCluster(cluster):
     @param cluster The cluster to format
     @return The formatted cluster output
     '''
-    format = "\t{ id: '%s', weight: %d, terms: %s },\n"
-    return format % (cluster.name, cluster.weight, str(cluster.terms))
+    format = "\t{ id: '%s', value: %d, terms: %s },\n"
+    return format % (cluster.name, cluster.value, str(cluster.terms))
 
 #---------------------------------------------------------------------------# 
 # runner script
@@ -85,7 +85,7 @@ def main():
         default="twatter-results")
     parser.add_option("-o", "--output", action="store", type="string",
         dest="output", help="path to the cluster output file",
-        default="twatter-clusters.js")
+        default="clusters.js")
     parser.add_option("-n", "--number", action="store", type="int",
         dest="number", help="the number of top clusters desired",
         default=10)
