@@ -104,7 +104,7 @@ case "$1" in
   topics) ${MAHOUT_HOME}/bin/mahout ldatopics                 \
       --input build/twatter-lda/state-20                      \
       --dictionary build/twatter-vectors/dictionary.file-0    \
-      --dictionaryType sequenceFile                                 
+      --dictionaryType sequencefile                                 
   ;;
 
   #---------------------------------------------------------- #
@@ -116,7 +116,7 @@ case "$1" in
       --pointsDir build/twatter-clusters/clusteredPoints      \
       --numWords 5                                            \
       --dictionary build/twatter-vectors/dictionary.file-0    \
-      --dictionaryType sequenceFile                                 
+      --dictionaryType sequencefile                                 
   ;;
 
   #---------------------------------------------------------- #
