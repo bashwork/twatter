@@ -18,6 +18,12 @@ var vis = new pv.Panel()
     .width(document.body.clientWidth)
     .height(document.body.clientHeight);
 
+var tree = pv.nest(twatter)
+    .key(function(d) d.id)
+    .key(function(d) d.term);
+    //.value(function(d) d.value);
+    //map();
+
 /*
 var bubble = vis.add(pv.Layout.Pack)
     .top(-50)
