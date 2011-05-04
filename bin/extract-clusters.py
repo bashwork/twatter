@@ -19,8 +19,9 @@ class Cluster(object):
     '''
     def __init__(self, name, value=0):
         self.name   = name
-        self.value = value
+        self.value  = value
         self.terms  = []
+        self.tweets = []
 
 #---------------------------------------------------------------------------# 
 # helper methods
