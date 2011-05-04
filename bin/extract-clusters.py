@@ -66,12 +66,27 @@ def sortBySize(clusters, count):
 def formatCluster(cluster):
     ''' Formats a given cluster in the form expected by
     the protovis library.
+
+    var twatter = [ {id:cl-id, value:weight, terms:[term] } ]
     
     @param cluster The cluster to format
     @return The formatted cluster output
     '''
     format = "\t{ id: '%s', value: %d, terms: %s },\n"
     return format % (cluster.name, cluster.value, str(cluster.terms))
+
+def formatCluster2(cluster):
+    ''' Formats a given cluster in the form expected by
+    the protovis library.
+
+    var twatter = { cl-id: { term : weight } }
+    
+    @param cluster The cluster to format
+    @return The formatted cluster output
+    '''
+    terms  = ["%s:%s" % (term, cluster.value) for term in cluster.terms]
+    format = "\t '%s': { %s },\n"
+    return format % (cluster.name, "".join(terms))
 
 #---------------------------------------------------------------------------# 
 # runner script
@@ -97,10 +112,10 @@ def main():
     
     # Write to output file
     with open(options.output, 'w') as output:
-        output.write("var twatter = [\n")
+        output.write("var twatter = {\n")
         for cluster in sortBySize(clusters, options.number):
-            output.write(formatCluster(cluster))
-        output.write("];")
+            output.write(formatCluster2(cluster))
+        output.write("};")
 
 if __name__ == '__main__':
     main()
