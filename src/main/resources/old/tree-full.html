@@ -7,8 +7,8 @@
     <style type="text/css">
 
 #fig {
-  width: 800px;
-  height: 700px;
+  width: 1024px;
+  height: 960px;
 }
 
     </style>
@@ -18,16 +18,17 @@
 
 var vis = new pv.Panel()
     .width(1024)
-    .height(960)
-    .left(75)
-    .right(-75)
-    .top(-30)
-    .bottom(-80);
+    .height(1024)
+    .left(100)
+    .top(-25);
+
+var clusters = pv.dom(twatter).root("twatter").nodes();
+var size = clusters[0].childNodes.length;
 
 var tree = vis.add(pv.Layout.Tree)
-    .nodes(pv.dom(twatter).root("twatter").nodes())
-    .depth(100)
-    .breadth(20)
+    .nodes(clusters)
+    .depth(size*5.25)
+    .breadth(size/3.45)
     .orient("radial");
 
 tree.link.add(pv.Line);

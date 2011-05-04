@@ -84,9 +84,9 @@ def formatCluster2(cluster):
     @param cluster The cluster to format
     @return The formatted cluster output
     '''
-    terms  = ["%s:%s" % (term, cluster.value) for term in cluster.terms]
-    format = "\t '%s': { %s },\n"
-    return format % (cluster.name, "".join(terms))
+    terms  = ["\"%s\":%s" % (term, cluster.value) for term in cluster.terms]
+    format = "    '%s': { %s },\n"
+    return format % (cluster.name, ", ".join(terms))
 
 #---------------------------------------------------------------------------# 
 # runner script
