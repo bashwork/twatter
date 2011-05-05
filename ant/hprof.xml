@@ -1,0 +1,28 @@
+<project xmlns:ivy="antlib:fr.jayasoft.ivy.ant">
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- hprof properties -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <property name="hprof.version" value="1.0"/>
+  <property name="hprof.jar" value="hprof-${hprof.version}.jar"/>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- get and install hprof -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="hprof.install" depends="resolve" description="install the new hprof download">
+    <taskdef name="hprof" classname="net.sf.antprof.HProf">
+      <classpath path="classpath" />
+    </taskdef>
+  </target>
+
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <!-- run the hprof task -->
+  <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <target name="hprof" depends="hprof.install" description="run the hprof task">
+
+    <hprof destfile="${build.dir}/hprof-profile>
+      <java classpathref="classpath" classname="${main.class)" />
+    </hprof>
+  </target>
+
+</project>
