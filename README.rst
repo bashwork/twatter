@@ -84,13 +84,15 @@ twitter tweets:
     ./bin/mahoutter.sh sparse
     ./bin/mahoutter.sh kmeans 100
     ./bin/mahoutter.sh dump
-    ./bin/extract_clusters.py --input=twatter-results --number=40
-    ./bin/pre_prepare.py
-    ./bin/mahoutter.sh prepare test
-    ./bin/mahoutter.sh prepare eval
+    ./bin/extract_clusters.py --input=twatter-1-results --number=40
+    ./bin/pre_prepare.py -c twatter/twatter-1-results -i twatter/twatter-1 -o twatter
     ./bin/mahoutter.sh prepare train
     ./bin/mahoutter.sh train
-    ./bin/mahoutter.sh test test
+    ./bin/mahoutter.sh prepare test
+    ./bin/mahoutter.sh test test # note about bad inputs with null error
+    mkdir /tmp/twatter/twatter-eval/
+    mv /tmp/twatter/twatter-2 /tmp/twatter/twatter-eval
+    ./bin/mahoutter.sh prepare eval
     ./bin/mahoutter.sh test eval
     ./bin/partition_clusters.py
     ./bin/twatter.sh summarize --percent 0.25 --input=summary-twatter-test
