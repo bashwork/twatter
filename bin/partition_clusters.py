@@ -10,7 +10,9 @@ create directories for the train and test sets.  These directories are
 populated by files named for the class and containing the contents of
 each tweet of that class (one per line).
 """
-import os, copy
+import os, sys
+import shutil
+import copy
 from optparse import OptionParser
 
 def findClusters(file):
@@ -53,51 +55,13 @@ def findClusters(file):
 	#print results		
 	return results
 	
-# splits clusters into test and training sets
-def partitionClusters(percent, clusters):
-	trainClusters = []
-	testClusters = []
-	for cluster in clusters:
-		# Create a new entry for this cluster (the terms) in both sets
-		trainCluster = copy.deepcopy(cluster[0])
-		testCluster = copy.deepcopy(cluster[0])
-		
-		trainTweets = []
-		testTweets = []
-		
-		# loop through the tweets and pick out percent number of them for the
-		# test set
-		n = 0
-		for tweetID in cluster[1]:
-			# put this in the train set
-			if n >= percent:
-				trainTweets.append(tweetID)
-				
-			# put this in the test set
-			else:
-				testTweets.append(tweetID)
-			
-			n += 10
-			if n > 100:
-				n = 0
-		
-		# put the results into the cluster
-		trainCluster.append(trainTweets)
-		testCluster.append(testTweets)
-		
-		# put the cluster into the clusters
-		trainClusters.append(trainCluster)
-		testClusters.append(testCluster)
-	
-	return (trainClusters, testClusters)
-	
 if __name__ == '__main__':
 	parser = OptionParser()
 	parser.add_option("-i", "--input", action="store", type="string",
-		dest="input", help="path to the raw tweets directory",
+		dest="input", help="path to the cluster-results file",
 		default="twatter")
 	parser.add_option("-c", "--clusterResults", action="store", type="string",
-		dest="results", help="path and file of the cluster-results",
+		dest="clusterResults", help="path and file of the cluster-results",
 		default="twatter-results")
 	parser.add_option("-o", "--output", action="store", type="string",
 		dest="output", help="root of path to store output files",
@@ -108,21 +72,13 @@ if __name__ == '__main__':
 	(options, extra) = parser.parse_args()
 
 	# Read cluster results input file
-	with open(options.results) as results:
-		clusters = findClusters(results)
-	
-	# Parition clusters into train and test set
-	(trainClusters, testClusters) = partitionClusters(options.number, clusters)
+	with open(options.clusterResults) as input:
+		clusters = findClusters(file)
 
-	# Create two new directories at the output location
-	outputs = [options.output + "-twatter-train",
-		options.output + "twatter-test"]
-
-	for output in outputs:
-		if not os.path.exists(output):
-			os.makedirs(output)
+	if not os.path.exists(options.output):
+		os.makedirs(options.output)
 	
-	for cluster in trainClusters:
+	for cluster in clusters:
 		clusterName = ""
 		# Build a name for the class from the terms
 		for term in cluster[0]:
@@ -134,40 +90,9 @@ if __name__ == '__main__':
 		clusterName = clusterName.replace(" ", "_")	
 
 		# Create a file for this cluster
-		newClassFile = open(str(options.output + "/twatter-train/" + clusterName), 'w')
-
-		# Find each ID and put the tweet into the new file 
-		for tweetID in cluster[1]:
-			if os.path.exists(options.input + "/" + str(tweetID)):
-				#print "Found file for", tweetID, "and put it in",clusterName
-				tweetFile = open(options.input + "/" + str(tweetID))
-				line = tweetFile.readline();
-				newClassFile.write(line + "\n")
-				tweetFile.close()
-		newClassFile.close()
-		
-	for cluster in testClusters:
-		clusterName = ""
-		# Build a name for the class from the terms
-		for term in cluster[0]:
-			if clusterName == "":
-				clusterName = str(term)
-			else:
-				clusterName = clusterName + "-" + str(term)
-		# replace white space with _
-		clusterName = clusterName.replace(" ", "_")	
-
-		# Create a file for this cluster
-		newClassFile = open(str(options.output + "/twatter-test/" + clusterName), 'w')
-
-		# Find each ID and put the tweet into the new file 
-		for tweetID in cluster[1]:
-			if os.path.exists(options.input + "/" + str(tweetID)):
-				#print "Found file for", tweetID, "and put it in",clusterName
-				tweetFile = open(options.input + "/" + str(tweetID))
-				line = tweetFile.readline();
-				newClassFile.write(line + "\n")
-				tweetFile.close()
-		newClassFile.close()
-
-	file.close()
+		with open(os.path.join(options.output, clusterName), 'w') as output:
+			# Find each ID and put the tweet into the new file 
+			for tweetID in cluster[1]:
+				if os.path.exists(os.path.join(options.input, tweetID)):
+					with open(os.path.join(options.input, tweetID)) as tweet:
+						output.write(tweet.readline() + "\n")

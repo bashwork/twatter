@@ -73,6 +73,29 @@ or by using one of the runner scripts in the config directory
   indexed.
 
 ============================================================
+The Full Process Workflow
+============================================================
+
+In order to perform the total clustering and classifying of
+twitter tweets:
+
+    ./bin/splitter.py --number=2 --input=twatter --ouput=twatter
+    ./bin/mahoutter.sh sequence
+    ./bin/mahoutter.sh sparse
+    ./bin/mahoutter.sh kmeans 100
+    ./bin/mahoutter.sh dump
+    ./bin/extract_clusters.py --input=twatter-results --number=40
+    ./bin/pre_prepare.py
+    ./bin/mahoutter.sh prepare test
+    ./bin/mahoutter.sh prepare eval
+    ./bin/mahoutter.sh prepare train
+    ./bin/mahoutter.sh train
+    ./bin/mahoutter.sh test test
+    ./bin/mahoutter.sh test eval
+    ./bin/partition_clusters.py
+    ./bin/twatter.sh summarize --percent 0.25 --input=summary-twatter-test
+
+============================================================
 Todo
 ============================================================
 

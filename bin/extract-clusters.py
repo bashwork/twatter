@@ -104,7 +104,7 @@ def main():
         default="clusters.js")
     parser.add_option("-n", "--number", action="store", type="int",
         dest="number", help="the number of top clusters desired",
-        default=10)
+        default=40)
     (options, extra) = parser.parse_args()
     
     # Find the cluster data we're interested in
