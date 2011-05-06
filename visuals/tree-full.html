@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Node-Link Tree</title>
+    <link type="text/css" rel="stylesheet" href="ex.css"/>
+    <script type="text/javascript" src="js/protovis-r3.2.js"></script>
+    <script type="text/javascript" src="js/clusters.js"></script>
+    <style type="text/css">
+
+#fig {
+  width: 1024px;
+  height: 960px;
+}
+
+    </style>
+  </head>
+  <body><div id="center"><div id="fig">
+    <script type="text/javascript+protovis">
+
+var vis = new pv.Panel()
+    .width(1024)
+    .height(1024)
+    .left(100)
+    .top(-25);
+
+var clusters = pv.dom(twatter).root("twatter").nodes();
+var size = clusters[0].childNodes.length;
+
+var tree = vis.add(pv.Layout.Tree)
+    .nodes(clusters)
+    .depth(size*5.25)
+    .breadth(size/3.45)
+    .orient("radial");
+
+tree.link.add(pv.Line);
+
+tree.node.add(pv.Dot)
+    .fillStyle(function(n) n.firstChild ? "#aec7e8" : "#ff7f0e");
+
+tree.label.add(pv.Label);
+
+vis.render();
+
+    </script>
+  </div></div></body>
+</html>
