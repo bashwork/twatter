@@ -85,17 +85,25 @@ twitter tweets:
     ./bin/mahoutter.sh kmeans 100
     ./bin/mahoutter.sh dump
     ./bin/extract_clusters.py --input=twatter-1-results --number=40
-    ./bin/pre_prepare.py -c twatter/twatter-1-results -i twatter/twatter-1 -o twatter
+    ./bin/pre-prepare.py -c twatter/twatter-1-results -i twatter/twatter-1 -o twatter
     ./bin/mahoutter.sh prepare train
     ./bin/mahoutter.sh train
     ./bin/mahoutter.sh prepare test
     ./bin/mahoutter.sh test test # note about bad inputs with null error
     mkdir /tmp/twatter/twatter-eval/
-    mv /tmp/twatter/twatter-2 /tmp/twatter/twatter-eval
+    mv /tmp/twatter/twatter-2 twatter/twatter-eval
     ./bin/mahoutter.sh prepare eval
     ./bin/mahoutter.sh test eval
-    ./bin/partition_clusters.py
+    ./bin/pre-summarize.py -i twatter/twatter-2 -c twatter/twatter-2-results
     ./bin/twatter.sh summarize --percent 0.25 --input=summary-twatter-test
+
+It should be noted that there is a weird bug in mahout that will
+cause a null reference exception. This is caused by an invalid map
+index, however we don't know why. These bugs are fixed in the SVN
+version:
+
+* https://issues.apache.org/jira/browse/MAHOUT-604
+
 
 ============================================================
 Todo
