@@ -96,7 +96,8 @@ def main():
     for cluster in clusters:
         with open(os.path.join(options.output, cluster.name), 'w') as output:
             for tweetID in cluster.tweets:
-                filename = os.path.join(options.input, tweetID)
+                filename = os.path.join(options.input, os.path.join(cluster.name, tweetID))
+		print filename
                 if os.path.exists(filename):
                     with open(filename) as tweet:
                         output.write(tweet.readline() + "\n")
