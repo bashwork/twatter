@@ -1,32 +1,12 @@
-var w = screen.width,
-    h = screen.height,
-    fill = d3.scale.category20c(),
-    format = d3.format(",d");
-
-var packer = d3.layout.pack()
-    .sort(null)
-    .size([w, h]);
-
-var vis = d3.select("#chart").append("svg:svg")
-    .attr("width", w)
-    .attr("height", h)
-    .attr("class", "packed-bubbles")
-
-var node = vis.selectAll("g.node")
-    .data(packer({ children: twatter })
-    .filter(function(d) { return !d.children; }))
-  .enter().append("svg:g")
-    .attr("class", "circle")
-    .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"});
-
-node.append("svg:title")
-    .text(function(d) { return d.data.id + ":" + format(d.data.value); });
-
-node.append("svg:circle")
-    .attr("r", function(d) { return d.r; })
-    .attr("fill", function(d) { return fill(Math.random()); });
-
-node.append("svg:text")
-    .attr("text-anchor", "middle")
-    .attr("dy", ".3em")
-    .text(function(d) { return d.data.terms; });
+var twatter = [
+	{ id: 'CL-35271', value: 5161, terms: ['o', 'my', 'p', 'yes', 'fui'] },
+	{ id: 'CL-28743', value: 1843, terms: ['http', 'tumblr.com', 'http tumblr.com', 'photo', 'photo http'] },
+	{ id: 'CL-1887',  value: 1680, terms: ['23', 'does', '23 23', 'my', 'anyone'] },
+	{ id: 'CL-31520', value: 1660, terms: ['rt', 'bye', 'i', 'yg', 'my'] },
+	{ id: 'CL-15908', value: 1412, terms: ['la', 'y', 'eh', 'de', 'que'] },
+	{ id: 'CL-23454', value: 1148, terms: ['lol', 'me', 'talk', 'i', 'rt'] },
+	{ id: 'CL-14940', value: 1099, terms: ["i'm", '3', 'when', 'gonna', 'i'] },
+	{ id: 'CL-16641', value: 991, terms: ['i', 'live', 'from', 'my', 'live http'] },
+	{ id: 'CL-30639', value: 938, terms: ['que', 'n\xc3\xa3o', 'meu', 'isso', 'o'] },
+	{ id: 'CL-34198', value: 880, terms: ['de', 'eu', 'tenho', 'que', 'rt'] }
+];
