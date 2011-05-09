@@ -27,14 +27,17 @@ class TwitterLanguageGuesser(inputPath:String, languagePath:String) {
 
     /**
      * The main file processing method
+     *
+     * @returns A list of (File, language)
      */
-    def start() {
+    def start() : List[(File, String)] = {
         logger.info("Guessing file languages from {}", inputPath)
-        val files = inputs.listFiles
-        files.foreach { file =>
+        (if (inputs.isFile) List(inputs)
+         else inputs.listFiles.toList).map { file =>
             val language = processFile(file)
-            println(language + " -> " + file.getAbsolutePath)
-        }
+            logger.info("{} -> {}", language, file.getAbsolutePath)
+            (file, language)
+        }.toList
     }
 
     /**
