@@ -72,6 +72,10 @@ or by using one of the runner scripts in the config directory
   complex searches against all the twitter content currently
   indexed.
 
+* **TwatterLanguageGuesser** - Given a directory of documents,
+  it will attempt to guess the language of the given document
+  using a collection of stopword lists as the seeds.
+
 ============================================================
 The Full Process Workflow
 ============================================================
@@ -122,3 +126,10 @@ If you need to retrieve dependencies behind a proxy, make
 sure to set the correct ant options before running ``ant resolve``::
 
     export ANT_OPTS="-Dhttp.proxyHost=127.0.0.1 -Dhttp.proxyPort=5865"
+
+============================================================
+Thanks
+============================================================
+
+* The collection of stopword lists came from
+  http://snowball.tartarus.org

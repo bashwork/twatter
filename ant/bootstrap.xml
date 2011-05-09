@@ -11,6 +11,7 @@
   <!-- build variables -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <property name="src.dir"    location="${basedir}/src"/>
+  <property name="res.dir"    location="${src.dir}/main/resources"/>
   <property name="build.dir"  location="${basedir}/build"/>
   <property name="jar.dir"    location="${basedir}/jar"/>
   <property name="lib.dir"    location="${basedir}/lib"/>

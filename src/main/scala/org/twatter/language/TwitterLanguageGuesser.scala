@@ -18,8 +18,8 @@ class TwitterLanguageGuesser(inputPath:String) {
 
     private val logger = LoggerFactory.getLogger(this.getClass)
     private val inputs = new File(inputPath)
-        logger.info("{}", getClass.getResource("src/main/resources/stopwords/"))
-    private val stopwords = new File(getClass.getResource("src/main/resources/stopwords/").toURI).listFiles
+    //private val stopwords = new File(getClass.getResource("/stopwords").toURI).listFiles
+    private val stopwords = new File("src/main/resources/stopwords/").listFiles
     private val languages = stopwords.map { stopword =>
         val mapper = WordlistLoader.getWordSet(stopword)
         (stopword.getName.split('.').head, mapper)
@@ -34,7 +34,7 @@ class TwitterLanguageGuesser(inputPath:String) {
         val files = inputs.listFiles
         files.foreach { file =>
             val language = processFile(file)
-            println("[{}]: {}", language, file.getAbsolutePath)
+            println(language + " -> " + file.getAbsolutePath)
         }
     }
 
