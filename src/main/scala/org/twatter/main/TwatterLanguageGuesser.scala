@@ -24,8 +24,10 @@ object TwatterLanguageGuesser extends TwatterMainTrait {
      */
     override def process(options: Map[String,Any], error: Unit) {
         if (!processDirectory(options("input")))  error
+        if (!processDirectory(options("language")))  error
 
-        val guesser  = new TwitterLanguageGuesser(options("input"))
+        val guesser  = new TwitterLanguageGuesser(
+            options("input"), options("language"))
         guesser.start
     }
 
@@ -37,6 +39,7 @@ object TwatterLanguageGuesser extends TwatterMainTrait {
      */
     override def addOptions(options:Options) : Options = {
         options.addOption("i", "input", true, "specify the input directory to use")
+        options.addOption("l", "language", true, "specify the directory of the language files")
     }
 
     /**
@@ -45,7 +48,8 @@ object TwatterLanguageGuesser extends TwatterMainTrait {
      * @return The default options map
      */
     override def createDefaults() = Map[String,Any](
-        "input"   -> "documents")
+        "language" -> "src/main/resources/stopwords/",
+        "input"    -> "documents")
 }
 
 

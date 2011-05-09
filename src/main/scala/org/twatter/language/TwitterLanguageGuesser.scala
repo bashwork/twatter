@@ -13,16 +13,15 @@ import org.apache.lucene.util.Version
  * A class used to attempt to guess the language of a given file.
  *
  * @param inputPath The input file directory to guess the language for
+ * @param languagePath The path to the directory containing the stop word lists
  */
-class TwitterLanguageGuesser(inputPath:String) {
+class TwitterLanguageGuesser(inputPath:String, languagePath:String) {
 
     private val logger = LoggerFactory.getLogger(this.getClass)
     private val inputs = new File(inputPath)
-    //private val stopwords = new File(getClass.getResource("/stopwords").toURI).listFiles
-    private val stopwords = new File("src/main/resources/stopwords/").listFiles
-    private val languages = stopwords.map { stopword =>
-        val mapper = WordlistLoader.getWordSet(stopword)
-        (stopword.getName.split('.').head, mapper)
+    private val languages = new File(languagePath).listFiles.map { language =>
+        val mapper = WordlistLoader.getWordSet(language)
+        (language.getName.split('.').head, mapper)
     }
     private val analyzer = new StandardAnalyzer(Version.LUCENE_30, new java.util.HashSet)
 
