@@ -52,14 +52,13 @@ class TwitterLanguageGuesser(inputPath:String, languagePath:String) {
         val attr = stream.addAttribute(classOf[CharTermAttribute])
         while (stream.incrementToken) {
             val next = new String(attr.buffer, 0, attr.length)
-            languages.foreach { listing => {
-                val (language, words) = listing
+            languages.foreach { case (language, words) => {
                 if (words.contains(next)) {
                   map(language) = map.getOrElse(language, 1) + 1
                 }
             }}
         }
 
-        map.toList.sortBy { l => l._2 }.last._1
+        map.toList.sortBy { _._2 }.last._1
     }
 }
